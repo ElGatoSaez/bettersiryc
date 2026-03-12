@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Better SIRYC",
+  "version": "1.2.0",
+  "description": "Improves the SIRYC experience inside Chromium.",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_title": "Better SIRYC"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://hospitalregional.cl/siryc/*",
+        "*://10.6.9.245/siryc/*",
+        "*://sinetsur.ssconcepcion.cl/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ]
+}
