@@ -17,15 +17,6 @@ Actualmente Better SIRYC contiene dos mejoras principales:
 - Mejora el título de las pestañas identificándolas con paciente, sala o cama para reconocerlas mejor y trabajar más rápido.
 - Sistema de plantillas clínicas por campo dentro de formularios compatibles de Evolución y Epicrisis.
 
-Hoy la extensión puede:
-
-- actualizar el título de la pestaña según el contexto clínico actual
-- detectar contenido cargado en iframe y sincronizar el nombre del paciente al título principal
-- inyectar un botón morado de plantillas junto a botones de historial compatibles
-- insertar plantillas dentro de campos soportados
-- gestionar plantillas desde una UI propia de la extensión
-- diferenciar plantillas por formulario y por campo para evitar colisiones entre nombres repetidos
-
 ## Por qué
 
 SIRYC funciona, pero le faltaban ciertas mejoras o funciones que sí son propias de otros sistemas clínicos.
@@ -51,27 +42,6 @@ Better SIRYC está construido alrededor de la idea de que una mejora debe sentir
 5. Guarda la plantilla
 6. En SIRYC, haz click en el botón morado junto al campo compatible
 7. Elige la plantilla que quieres insertar
-
-## Formularios y campos soportados
-
-### Evolución Médica
-
-- EVOLUCION O COMENTARIO *
-- EXAMEN FISICO
-- RESULTADOS DE EXAMENES Y PROCEDIMIENTOS
-- PROBLEMAS Y PLANES
-- INDICACIONES ADICIONALES
-
-### Epicrisis Médica
-
-- PATOLOGIAS CRONICAS *
-- EVOLUCION O COMENTARIO *
-- MEDICAMENTOS Y DOSIS SUMINISTRADAS EN HOSPITALIZACION *
-- RESULTADOS DE EXAMENES RELEVANTES Y PROCEDIMIENTOS *
-- REPOSO
-- REGIMEN ALIMENTARIO
-- CONTROLES
-- INDICACIONES ADICIONALES
 
 ## Roadmap
 
