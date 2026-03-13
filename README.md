@@ -1,56 +1,108 @@
 # Better SIRYC
 
-Better SIRYC es una extensión de Chromium que añade mejoras y funciones a SIRYC para un uso más rápido y eficiente de la plataforma. 
+[![Release](https://img.shields.io/github/v/release/ElGatoSaez/bettersiryc?label=release)](https://github.com/ElGatoSaez/bettersiryc/releases)
+[![Issues](https://img.shields.io/github/issues/ElGatoSaez/bettersiryc)](https://github.com/ElGatoSaez/bettersiryc/issues)
+[![Stars](https://img.shields.io/github/stars/ElGatoSaez/bettersiryc?style=social)](https://github.com/ElGatoSaez/bettersiryc/stargazers)
+
+> Mejoras reales para SIRYC, pensadas para trabajo clínico real.
+
+Better SIRYC es una extensión de Chromium que añade mejoras y funciones a SIRYC para un uso más rápido, claro y eficiente de la plataforma.
+
+El proyecto comenzó como un userscript pequeño y, al crecer, evolucionó a extensión para soportar almacenamiento persistente, una UI propia para configuración y una distribución más seria a usuarios.
 
 ## Mejoras
 
-Actualmente Better SIRYC contiene dos mejoras:
+Actualmente Better SIRYC contiene dos mejoras principales:
 
-- Mejora el título de las pestañas identíficandolas con el paciente y sala para reconocerlas mejor y trabajar más rápido.
-- Sistema de plantillas clínicas por campo dentro de los formularios de Evolución y Epicrisis.
+- Mejora el título de las pestañas identificándolas con paciente, sala o cama para reconocerlas mejor y trabajar más rápido.
+- Sistema de plantillas clínicas por campo dentro de formularios compatibles de Evolución y Epicrisis.
 
-## Por qué?
+Hoy la extensión puede:
 
-SIRYC funciona, pero le faltaban ciertas mejoras o funciones las cuales son propias de otros sistemas clínicos.
+- actualizar el título de la pestaña según el contexto clínico actual
+- detectar contenido cargado en iframe y sincronizar el nombre del paciente al título principal
+- inyectar un botón morado de plantillas junto a botones de historial compatibles
+- insertar plantillas dentro de campos soportados
+- gestionar plantillas desde una UI propia de la extensión
+- diferenciar plantillas por formulario y por campo para evitar colisiones entre nombres repetidos
 
-Better SIRYC está construido alrededor de la idea de que una mejora debe sentirse lo más propio posible al esquema de trabajo actual del médico, no ser un distractor de por si. Esta es filosofía propia de una Natural user interface.
+## Por qué
+
+SIRYC funciona, pero le faltaban ciertas mejoras o funciones que sí son propias de otros sistemas clínicos.
+
+Better SIRYC está construido alrededor de la idea de que una mejora debe sentirse lo más propia posible al esquema de trabajo actual del médico, no ser un distractor por sí mismo. Esa es la filosofía general del proyecto.
 
 ## Instalación
 
-### Load Unpacked In Chromium
+### Cargar la extensión en Chromium
 
-1. Open `chrome://extensions`
-2. Enable `Developer mode`
-3. Click `Load unpacked`
-4. Select this repository folder
-5. Open SIRYC and start using the extension
+1. Abre `chrome://extensions`
+2. Activa `Developer mode`
+3. Haz click en `Load unpacked`
+4. Selecciona esta carpeta del repositorio
+5. Abre SIRYC y comienza a usar Better SIRYC
 
-## Using Templates
+## Uso de plantillas
 
-1. Click the Better SIRYC extension icon
-2. Open `Gestionar plantillas`
-3. Create or edit a template
-4. Choose the correct form and field from the grouped selector
-5. Save the template
-6. In SIRYC, click the purple button next to a supported field
-7. Pick the template to insert
+1. Haz click en el icono de Better SIRYC
+2. Abre `Gestionar plantillas`
+3. Crea o edita una plantilla
+4. Elige el formulario y el campo desde el selector agrupado
+5. Guarda la plantilla
+6. En SIRYC, haz click en el botón morado junto al campo compatible
+7. Elige la plantilla que quieres insertar
+
+## Formularios y campos soportados
+
+### Evolución Médica
+
+- EVOLUCION O COMENTARIO *
+- EXAMEN FISICO
+- RESULTADOS DE EXAMENES Y PROCEDIMIENTOS
+- PROBLEMAS Y PLANES
+- INDICACIONES ADICIONALES
+
+### Epicrisis Médica
+
+- PATOLOGIAS CRONICAS *
+- EVOLUCION O COMENTARIO *
+- MEDICAMENTOS Y DOSIS SUMINISTRADAS EN HOSPITALIZACION *
+- RESULTADOS DE EXAMENES RELEVANTES Y PROCEDIMIENTOS *
+- REPOSO
+- REGIMEN ALIMENTARIO
+- CONTROLES
+- INDICACIONES ADICIONALES
 
 ## Roadmap
 
-Better SIRYC is actively evolving.
+Better SIRYC sigue evolucionando.
 
-Current focus:
+- Antes fue solo un userscript; hoy es una extensión de Chromium más mantenible y distribuible.
+- Seguiremos mejorando el sistema de templates para hacerlo más potente sin perder rapidez ni simplicidad.
+- Queremos seguir refinando la organización de plantillas y el flujo de múltiples plantillas por campo.
+- En el futuro nos gustaría preparar una distribución más formal e incluso subir Better SIRYC a Chrome Web Store.
 
-- keep the extension lightweight
-- expand templates carefully from MVP
-- preserve compatibility with real SIRYC workflows
-- avoid over-designing the UI
+## Contribuir
+
+Pull requests, ideas y mejoras son bienvenidas.
+
+Si quieres aportar al proyecto, puedes:
+
+- abrir un pull request con una mejora concreta
+- abrir una issue para reportar un bug
+- sugerir nuevas funciones o mejoras que le faltan a SIRYC y que Better SIRYC podría incorporar
+
+La idea es que esto crezca como una herramienta útil, práctica y cada vez más pulida para su uso real.
+
+## Contacto
+
+Si tienes dudas, quieres proponer algo o sugerir una mejora, puedes hacerlo en las issues de este repositorio o escribirme a: `bettersiryc@gentes.cl`
 
 ## Legal and enquiries
 
 Se debe utilizar Better SIRYC de forma responsable.
 
-Better SIRYC sólo es una herramienta informática y no reemplaza decisiones ni deliberación médica.
+Better SIRYC solo es una herramienta informática y no reemplaza decisiones ni deliberación médica.
 
 Better SIRYC no es responsable de cualquier tipo de error o consecuencia grave que traiga su uso.
 
