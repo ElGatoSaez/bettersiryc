@@ -65,3 +65,144 @@ h1 {
   color: var(--accent);
   font-family: "Courier New", monospace;
 }
+
+.template-form {
+  margin-top: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font: inherit;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+.field-help {
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primary-action,
+.secondary-action,
+.template-item button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary-action {
+  background: #7b2cbf;
+  color: #fff;
+}
+
+.primary-action:hover,
+.primary-action:focus {
+  background: #6923a5;
+  outline: none;
+}
+
+.secondary-action {
+  background: rgba(31, 41, 51, 0.08);
+  color: var(--ink);
+}
+
+.secondary-action:hover,
+.secondary-action:focus {
+  background: rgba(31, 41, 51, 0.14);
+  outline: none;
+}
+
+.list-header {
+  margin-top: 28px;
+}
+
+.list-header h2 {
+  margin: 0 0 4px;
+  font-size: 24px;
+}
+
+.list-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.template-list {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.template-item {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.template-item h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.template-item p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.template-preview {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(31, 41, 51, 0.05);
+  white-space: pre-wrap;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.template-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.template-edit {
+  background: rgba(0, 109, 119, 0.12);
+  color: #00525a;
+}
+
+.template-delete {
+  background: rgba(181, 23, 23, 0.12);
+  color: #7d1212;
+}
