@@ -1,8 +1,18 @@
 # Better SIRYC
+<p align="center">
+<img width="400" height="212" alt="image" src="https://github.com/user-attachments/assets/4259c98e-2044-40a6-a064-869e20fca561" /></p>
 
-[![Release](https://img.shields.io/github/v/release/ElGatoSaez/bettersiryc?label=release)](https://github.com/ElGatoSaez/bettersiryc/releases)
-[![Issues](https://img.shields.io/github/issues/ElGatoSaez/bettersiryc)](https://github.com/ElGatoSaez/bettersiryc/issues)
-[![Stars](https://img.shields.io/github/stars/ElGatoSaez/bettersiryc?style=social)](https://github.com/ElGatoSaez/bettersiryc/stargazers)
+<p align="center">
+  <a href="https://github.com/ElGatoSaez/bettersiryc/releases">
+    <img src="https://img.shields.io/github/v/release/ElGatoSaez/bettersiryc?label=release">
+  </a>
+  <a href="https://github.com/ElGatoSaez/bettersiryc/issues">
+    <img src="https://img.shields.io/github/issues/ElGatoSaez/bettersiryc">
+  </a>
+  <a href="https://github.com/ElGatoSaez/bettersiryc/stargazers">
+    <img src="https://img.shields.io/github/stars/ElGatoSaez/bettersiryc?style=social">
+  </a>
+</p>
 
 > Mejoras reales para SIRYC, pensadas para trabajo clínico real.
 
