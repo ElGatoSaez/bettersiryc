@@ -1,47 +1,21 @@
 # Better SIRYC
 
-Better SIRYC is a Chromium extension that adds focused quality-of-life improvements to SIRYC without touching the backend.
+Better SIRYC es una extensión de Chromium que añade mejoras y funciones a SIRYC para un uso más rápido y eficiente de la plataforma. 
 
-It started as a userscript and evolved into an extension once the project needed persistent template storage, a configuration UI, and a cleaner path for distribution.
+## Mejoras
 
-## What It Does
+Actualmente Better SIRYC contiene dos mejoras:
 
-Better SIRYC currently improves two key parts of the workflow:
+- Mejora el título de las pestañas identíficandolas con el paciente y sala para reconocerlas mejor y trabajar más rápido.
+- Sistema de plantillas clínicas por campo dentro de los formularios de Evolución y Epicrisis.
 
-- Smarter browser tab titles so patient context is easier to identify at a glance.
-- Clinical templates for supported dynamic text fields inside SIRYC.
+## Por qué?
 
-Today, the extension can:
+SIRYC funciona, pero le faltaban ciertas mejoras o funciones las cuales son propias de otros sistemas clínicos.
 
-- update the tab title in record creation and patient record views
-- detect ASP.NET iframe content and sync the patient name to the parent tab
-- inject a purple templates button next to supported history buttons
-- insert templates into compatible fields
-- manage templates from the extension UI
-- scope templates by both form and field to avoid collisions between similar field names
+Better SIRYC está construido alrededor de la idea de que una mejora debe sentirse lo más propio posible al esquema de trabajo actual del médico, no ser un distractor de por si. Esta es filosofía propia de una Natural user interface.
 
-## Why
-
-SIRYC works, but everyday clinical use benefits from small improvements that reduce friction:
-
-- less tab confusion
-- less repeated typing
-- faster note-writing
-- better consistency between records
-
-Better SIRYC is built around the idea that improvements should feel native to the existing workflow, not heavy or distracting.
-
-## Current Template Scope
-
-The templates system currently targets dynamic textareas that already have an associated history button in SIRYC.
-
-This is intentional:
-
-- those fields are the safest and most consistent to detect
-- the UI stays close to an existing SIRYC pattern
-- the workflow remains fast and familiar
-
-## Installation
+## Instalación
 
 ### Load Unpacked In Chromium
 
@@ -61,36 +35,7 @@ This is intentional:
 6. In SIRYC, click the purple button next to a supported field
 7. Pick the template to insert
 
-## Supported Form Groups
-
-### Evolucion Medica
-
-- EVOLUCION O COMENTARIO *
-- EXAMEN FISICO
-- RESULTADOS DE EXAMENES Y PROCEDIMIENTOS
-- PROBLEMAS Y PLANES
-- INDICACIONES ADICIONALES
-
-### Epicrisis Medica
-
-- PATOLOGIAS CRONICAS *
-- EVOLUCION O COMENTARIO *
-- MEDICAMENTOS Y DOSIS SUMINISTRADAS EN HOSPITALIZACION *
-- RESULTADOS DE EXAMENES RELEVANTES Y PROCEDIMIENTOS *
-- REPOSO
-- REGIMEN ALIMENTARIO
-- CONTROLES
-- INDICACIONES ADICIONALES
-
-## Project Structure
-
-- [manifest.json](./manifest.json): extension manifest
-- [content-script.js](./content-script.js): runtime logic injected into SIRYC
-- [templates.js](./templates.js): template defaults, metadata and migration helpers
-- [options.html](./options.html): settings UI for template management
-- [popup.html](./popup.html): quick access entrypoint from the extension icon
-
-## Status
+## Roadmap
 
 Better SIRYC is actively evolving.
 
@@ -101,15 +46,12 @@ Current focus:
 - preserve compatibility with real SIRYC workflows
 - avoid over-designing the UI
 
-## Roadmap
+## Legal and enquiries
 
-- richer template organization
-- better multi-template workflow per field
-- scoped presets for repeated clinical patterns
-- cleaner distribution for end users
+Se debe utilizar Better SIRYC de forma responsable.
 
-## Notes
+Better SIRYC sólo es una herramienta informática y no reemplaza decisiones ni deliberación médica.
 
-Better SIRYC is designed as a workflow enhancement layer on top of an existing clinical system.
+Better SIRYC no es responsable de cualquier tipo de error o consecuencia grave que traiga su uso.
 
-It does not replace SIRYC and should be used with the same clinical caution and responsibility required by the base system itself.
+Otros términos y condiciones pueden ser vistos aquí.
