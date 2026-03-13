@@ -22,11 +22,13 @@
             <input id="template-name" type="text" placeholder="Ej: Vaginal" required>
           </label>
           <label class="field">
-            <span>Campo(s) compatible(s)</span>
-            <input id="template-fields" type="text" placeholder="Ej: INDICACIONES ADICIONALES, PROBLEMAS Y PLANES">
+            <span>Campo compatible</span>
+            <select id="template-field" required>
+              <option value="">Selecciona un campo</option>
+            </select>
           </label>
           <p class="field-help">
-            Usa el nombre visible del campo. Puedes escribir varios campos separados por coma.
+            Elige el campo exacto desde la lista para evitar errores de escritura.
           </p>
           <label class="field">
             <span>Contenido</span>

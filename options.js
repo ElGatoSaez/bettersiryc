@@ -3,11 +3,17 @@ const templateListElement = document.getElementById('template-list');
 const templateFormElement = document.getElementById('template-form');
 const templateIdElement = document.getElementById('template-id');
 const templateNameElement = document.getElementById('template-name');
-const templateFieldsElement = document.getElementById('template-fields');
+const templateFieldElement = document.getElementById('template-field');
 const templateContentElement = document.getElementById('template-content');
 const templateResetElement = document.getElementById('template-reset');
 const templateApi = globalThis.BetterSirycTemplates || {
     DEFAULT_TEMPLATES: [],
+    FORM_DEFINITIONS: [],
+    buildFieldSelectionValue: (formId, fieldLabel) => `${formId}::${fieldLabel}`,
+    cloneDefaultTemplates: () => [],
+    getFieldLabel: (formId, fieldValue) => fieldValue,
+    getFormLabel: (formId) => formId,
+    migrateTemplates: (templates) => ({ templates, changed: false }),
     normalizeFieldLabel: (value) => value || ''
 };
 let currentTemplates = [];
@@ -26,15 +32,37 @@ function createTemplateId() {
     return `template-${Date.now()}`;
 }
 
+function buildFieldOptions() {
+    if (!templateFieldElement) {
+        return;
+    }
+
+    templateApi.FORM_DEFINITIONS.forEach((group) => {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = group.label;
+
+        group.fields.forEach((fieldLabel) => {
+            const option = document.createElement('option');
+            option.value = templateApi.buildFieldSelectionValue(group.id, fieldLabel);
+            option.textContent = fieldLabel;
+            optgroup.appendChild(option);
+        });
+
+        templateFieldElement.appendChild(optgroup);
+    });
+}
+
 function getFormValues() {
     const name = templateNameElement ? templateNameElement.value.trim() : '';
-    const fieldValue = templateFieldsElement ? templateFieldsElement.value.trim() : '';
+    const fieldValue = templateFieldElement ? templateFieldElement.value.trim() : '';
     const content = templateContentElement ? templateContentElement.value : '';
+    const [formId, field] = fieldValue.split('::');
 
     return {
         id: templateIdElement ? templateIdElement.value.trim() : '',
         name,
-        fields: fieldValue ? fieldValue.split(',').map((field) => field.trim()).filter(Boolean) : [],
+        formId: formId || '',
+        fields: field ? [field] : [],
         content: content.trim()
     };
 }
@@ -46,8 +74,11 @@ function fillForm(template) {
     if (templateNameElement) {
         templateNameElement.value = template.name || '';
     }
-    if (templateFieldsElement) {
-        templateFieldsElement.value = Array.isArray(template.fields) ? template.fields.join(', ') : '';
+    if (templateFieldElement) {
+        const selectedField = Array.isArray(template.fields) && template.fields.length > 0 ? template.fields[0] : '';
+        templateFieldElement.value = selectedField
+            ? templateApi.buildFieldSelectionValue(template.formId || '', selectedField)
+            : '';
     }
     if (templateContentElement) {
         templateContentElement.value = template.content || '';
@@ -93,8 +124,11 @@ function renderTemplates(templates) {
         const title = document.createElement('h2');
         title.textContent = template.name;
 
+        const form = document.createElement('p');
+        form.textContent = `Formulario: ${template.formId ? templateApi.getFormLabel(template.formId) : 'Sin definir (editar recomendado)'}`;
+
         const fields = document.createElement('p');
-        fields.textContent = `Campos: ${(template.fields || []).join(', ') || 'Todos los campos compatibles'}`;
+        fields.textContent = `Campos: ${(template.fields || []).map((field) => templateApi.getFieldLabel(template.formId || '', field)).join(', ') || 'Todos los campos compatibles'}`;
 
         const preview = document.createElement('div');
         preview.className = 'template-preview';
@@ -121,6 +155,7 @@ function renderTemplates(templates) {
         actions.appendChild(deleteButton);
 
         card.appendChild(title);
+        card.appendChild(form);
         card.appendChild(fields);
         card.appendChild(preview);
         card.appendChild(actions);
@@ -129,7 +164,7 @@ function renderTemplates(templates) {
 }
 
 function saveDefaultTemplates() {
-    return saveTemplates(templateApi.DEFAULT_TEMPLATES);
+    return saveTemplates(templateApi.cloneDefaultTemplates());
 }
 
 async function loadTemplates() {
@@ -140,8 +175,16 @@ async function loadTemplates() {
 
     chrome.storage.local.get(['templates'], async (result) => {
         const hasTemplates = Array.isArray(result.templates) && result.templates.length > 0;
-        const templates = hasTemplates ? result.templates : await saveDefaultTemplates();
-        currentTemplates = templates;
+        const sourceTemplates = hasTemplates ? result.templates : templateApi.cloneDefaultTemplates();
+        const migration = templateApi.migrateTemplates(sourceTemplates);
+        const templates = migration.templates;
+
+        if (!hasTemplates || migration.changed) {
+            await saveTemplates(templates);
+        } else {
+            currentTemplates = templates;
+        }
+
         renderStatus(`Almacenamiento listo. Plantillas guardadas: ${templates.length}`);
         renderTemplates(templates);
     });
@@ -151,8 +194,8 @@ async function handleTemplateSave(event) {
     event.preventDefault();
 
     const nextTemplate = getFormValues();
-    if (!nextTemplate.name || !nextTemplate.content) {
-        renderStatus('La plantilla necesita al menos un nombre y contenido.');
+    if (!nextTemplate.name || !nextTemplate.content || !nextTemplate.formId || nextTemplate.fields.length === 0) {
+        renderStatus('La plantilla necesita nombre, formulario, campo y contenido.');
         return;
     }
 
@@ -160,6 +203,7 @@ async function handleTemplateSave(event) {
     const templateToSave = {
         id: templateId,
         name: nextTemplate.name,
+        formId: nextTemplate.formId,
         fields: nextTemplate.fields.map((field) => templateApi.normalizeFieldLabel(field)),
         content: nextTemplate.content
     };
@@ -214,6 +258,8 @@ async function handleTemplateListClick(event) {
         }
     }
 }
+
+buildFieldOptions();
 
 if (templateFormElement) {
     templateFormElement.addEventListener('submit', handleTemplateSave);

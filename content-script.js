@@ -7,6 +7,10 @@
     const TEMPLATE_POPOVER_ID = 'bettersiryc-template-popover';
     const templateApi = globalThis.BetterSirycTemplates || {
         DEFAULT_TEMPLATES: [],
+        cloneDefaultTemplates: () => [],
+        getFormDefinitionByLabel: () => null,
+        getFormLabel: (formId) => formId,
+        migrateTemplates: (templates) => ({ templates, changed: false }),
         normalizeFieldLabel: (value) => value || ''
     };
 
@@ -145,6 +149,18 @@
         return parentLabel ? parentLabel.textContent.trim() : '';
     }
 
+    function getActiveFormId() {
+        const formSelect = document.getElementById('iNtiporce');
+        if (!(formSelect instanceof HTMLSelectElement) || formSelect.selectedIndex < 0) {
+            return '';
+        }
+
+        const selectedOption = formSelect.options[formSelect.selectedIndex];
+        const selectedLabel = selectedOption ? selectedOption.textContent.trim() : '';
+        const formDefinition = templateApi.getFormDefinitionByLabel(selectedLabel);
+        return formDefinition ? formDefinition.id : '';
+    }
+
     function insertTemplateIntoTextarea(textarea, templateContent) {
         const value = textarea.value || '';
         const start = typeof textarea.selectionStart === 'number' ? textarea.selectionStart : value.length;
@@ -165,8 +181,9 @@
 
     function saveDefaultTemplates() {
         return new Promise((resolve) => {
-            chrome.storage.local.set({ templates: templateApi.DEFAULT_TEMPLATES }, () => {
-                resolve(templateApi.DEFAULT_TEMPLATES);
+            const defaultTemplates = templateApi.cloneDefaultTemplates();
+            chrome.storage.local.set({ templates: defaultTemplates }, () => {
+                resolve(defaultTemplates);
             });
         });
     }
@@ -180,21 +197,40 @@
 
             chrome.storage.local.get(['templates'], async (result) => {
                 const hasTemplates = Array.isArray(result.templates) && result.templates.length > 0;
-                const templates = hasTemplates ? result.templates : await saveDefaultTemplates();
-                resolve(templates);
+                const sourceTemplates = hasTemplates ? result.templates : templateApi.cloneDefaultTemplates();
+                const migration = templateApi.migrateTemplates(sourceTemplates);
+
+                if (!hasTemplates || migration.changed) {
+                    chrome.storage.local.set({ templates: migration.templates }, () => {
+                        resolve(migration.templates);
+                    });
+                    return;
+                }
+
+                resolve(migration.templates);
             });
         });
     }
 
     function getApplicableTemplates(templates, textarea) {
         const currentLabel = templateApi.normalizeFieldLabel(getFieldLabel(textarea));
+        const currentFormId = getActiveFormId();
 
         return templates.filter((template) => {
             if (!Array.isArray(template.fields) || template.fields.length === 0) {
                 return true;
             }
 
-            return template.fields.some((field) => templateApi.normalizeFieldLabel(field) === currentLabel);
+            const matchesField = template.fields.some((field) => templateApi.normalizeFieldLabel(field) === currentLabel);
+            if (!matchesField) {
+                return false;
+            }
+
+            if (!template.formId) {
+                return true;
+            }
+
+            return template.formId === currentFormId;
         });
     }
 
@@ -210,11 +246,12 @@
         const applicableTemplates = getApplicableTemplates(templates, textarea);
         const popover = document.createElement('div');
         const fieldLabel = getFieldLabel(textarea);
+        const formLabel = templateApi.getFormLabel(getActiveFormId());
 
         popover.id = TEMPLATE_POPOVER_ID;
         popover.innerHTML = `
             <h3>Plantillas</h3>
-            <p>${fieldLabel || 'Campo compatible'}</p>
+            <p>${formLabel ? `${formLabel} · ` : ''}${fieldLabel || 'Campo compatible'}</p>
         `;
 
         if (applicableTemplates.length === 0) {
